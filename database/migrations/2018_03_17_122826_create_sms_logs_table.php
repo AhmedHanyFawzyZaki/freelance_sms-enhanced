@@ -17,6 +17,7 @@ class CreateSmsLogsTable extends Migration {
             $table->string('sent_to');
             $table->string('message');
             $table->string('reply');
+            $table->boolean('seen')->default(0);
             $table->timestamps();
         });
     }

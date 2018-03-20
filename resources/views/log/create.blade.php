@@ -15,34 +15,22 @@
                             </div>
                             <ul id="yw2" class="nav navbar-nav pull-right" role="menu">
                                 <li>
-                                    <a href="{{ route('home.index') }}">
+                                    <a href="{{ route('sms-log.index') }}">
                                         <span class="glyphicon glyphicon glyphicon-list"></span>
-                                        Numbers List
+                                        SMS Log List
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('home.create') }}">
+                                    <a href="{{ route('sms-log.create') }}">
                                         <span class="glyphicon glyphicon glyphicon-plus-sign"></span>
-                                        Create number
+                                        Create SMS Log
                                     </a>
-                                </li>
-                                <li>
-                                    <form action="{{ route('home.destroy', $model->id) }}" method="POST" style="display: inline;" onsubmit="if (confirm('Are you sure you want to delete this item?')) {
-                                                return true
-                                            } else {
-                                                return false
-                                            }
-                                            ;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button class="show-delete-btn" type="submit"><i class="glyphicon glyphicon-trash"></i> Delete number</button>
-                                    </form>
                                 </li>
                             </ul>
                         </nav>
                     </div>
 
-                    @include('home.form')
+                    @include('log.form')
                   </div>
                 </div>
             </div>
