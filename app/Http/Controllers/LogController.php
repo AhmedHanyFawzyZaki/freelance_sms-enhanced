@@ -24,9 +24,20 @@ class LogController extends Controller {
      * @return Response
      */
     public function index() {
-        $model = SmsLog::orderBy('id', 'desc')->paginate(10);
+        $model = SmsLog::where('seen', 0)->orderBy('id', 'desc')->paginate(10);
 
-        return view('log.index', compact('model'));
+        return view('log.index', array('model' => $model, 'seen' => 0));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function indexSeen() {
+        $model = SmsLog::where('seen', 1)->orderBy('id', 'desc')->paginate(10);
+
+        return view('log.index', array('model' => $model, 'seen' => 1));
     }
 
     /**
@@ -124,6 +135,24 @@ class LogController extends Controller {
         $model->delete();
 
         return redirect()->route('sms-log.index')->with('message', 'Item deleted successfully.');
+    }
+
+    /**
+     * Export the specified resource from storage.
+     *
+     */
+    public function export() {
+        $seen = $_GET['type'];
+        $logs = SmsLog::where('seen', $seen)->get([
+                    \DB::raw('sent_from as `SMS Ph# Received From`'), \DB::raw('message as `SMS Message Received`'),
+                    \DB::raw('sent_to as `Twilio # Sent To`'), \DB::raw('reply as `Twilio Message Reply Sent`')
+                ])
+                ->toArray();
+        return \Excel::create('SMS-Logs', function($excel) use ($logs) {
+                    $excel->sheet('SMS-Logs', function($sheet) use ($logs) {
+                        $sheet->fromArray($logs);
+                    });
+                })->download('csv');
     }
 
 }
