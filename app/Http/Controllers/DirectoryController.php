@@ -56,6 +56,7 @@ class DirectoryController extends Controller {
         $model->sent_to = $to;
         $model->message = $message;
         $model->is_outbound = 0;
+        $model->is_processed = 1; //all incoming sms should be marked as processed
         $model->save();
     }
 

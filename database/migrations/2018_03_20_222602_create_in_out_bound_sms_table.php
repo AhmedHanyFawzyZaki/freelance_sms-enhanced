@@ -17,6 +17,8 @@ class CreateInOutBoundSmsTable extends Migration {
             $table->string('sent_to');
             $table->string('message');
             $table->boolean('is_outbound')->default(0);
+            $table->boolean('is_processed')->default(0);
+            $table->text('error_msg')->nullable();
             $table->timestamps();
         });
     }

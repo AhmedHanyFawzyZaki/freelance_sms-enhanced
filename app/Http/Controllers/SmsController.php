@@ -10,6 +10,7 @@ use Twilio\Twiml;
 use Twilio\Rest\Client;
 use Twilio\Exceptions\TwilioException;
 use Log;
+use App\TargetNumber;
 
 class SmsController extends Controller {
 
@@ -38,10 +39,9 @@ class SmsController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * process the sms message
      * @param Request $request
-     * @return Response
+     * @return type
      */
     public function postSendSms(Request $request) {
         $model = new InOutBoundSms();
@@ -52,21 +52,27 @@ class SmsController extends Controller {
             return redirect()->back()->withErrors($validator);
         } else {
             $model->is_outbound = 1;
-            $model->sent_from = env('APP_NUMBER', '+15614752885');
+            $model->sent_from = env('APP_NUMBER');
             $model->sent_to = $request->input("sent_to");
             $model->message = $request->input("message");
+            $model->is_processed = 1; //individual outbound sms should be marked as processed
+            $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
             $model->save();
-
-            $this->_sendSMS($model->sent_from, $model->sent_to, $model->message);
 
             return redirect()->route('sms-marketing.index')->with('message', 'New SMS has been sent successfully to the following number: ' . $model->sent_to);
         }
     }
 
-    private function _sendSMS($from, $to, $message) {
+    /**
+     * send sms using twilio account configured in the env file
+     * @param type $from
+     * @param type $to
+     * @param type $message
+     */
+    private function _sendSMS($to, $message) {
         $accountSid = env('TWILIO_ACCOUNT_SID');
         $authToken = env('TWILIO_AUTH_TOKEN');
-        $twilioNumber = $from; //env('APP_NUMBER');
+        $twilioNumber = env('APP_NUMBER', '+15614752885');
 
         $client = new Client($accountSid, $authToken);
 
@@ -80,10 +86,73 @@ class SmsController extends Controller {
                     ]
             );
             Log::info('Message sent to ' . $twilioNumber);
+            return '';
         } catch (TwilioException $e) {
-            echo $e;
-            echo 'sd';die;
+            return $e;
+            /* echo $e;
+              die; */
         }
+    }
+
+    /**
+     * Show the form for uploading csv to send mass sms.
+     *
+     * @return Response
+     */
+    public function getUploadExcel() {
+        return view('targetnumber.excel.getUploadExcel');
+    }
+
+    /**
+     * Import the uploaded csv and store it in database to be queued and sent.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function postUploadExcel(Request $request) {
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->getRealPath();
+            $data = \Excel::load($path)->get();
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    $num = $value->phone_to_send_sms_too;
+                    $msg = $value->message_to_send;
+
+                    $this->_setTargetNumber($num);
+
+                    $model = new InOutBoundSms();
+                    $model->is_outbound = 1;
+                    $model->sent_from = env('APP_NUMBER');
+                    $model->sent_to = $num;
+                    $model->message = $msg;
+                    $model->is_processed = 1;
+                    $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
+                    $model->save();
+                }
+                return redirect()->back()->with('message', 'The excel sheet has been imported successfully.');
+            } else {
+                return redirect()->back()->with('message', 'The excel sheet uploaded is empty!');
+            }
+        } else {
+            return redirect()->back()->with('message', 'Please make sure that you uploaded a valid excel sheet.');
+        }
+    }
+
+    /**
+     * check for the provided number and add it if not found in db
+     * set the has queue flag in order to mark this number to be able to send sms
+     * @param type $number
+     */
+    private function _setTargetNumber($number) {
+        $target = TargetNumber::where('target_number', $number)->first();
+        if ($target) {
+            //$target->has_queue = 1; //set its queue
+        } else {
+            $target = new TargetNumber();
+            $target->target_number = $number;
+            //$target->has_queue = 1;
+        }
+        $target->save();
     }
 
 }
