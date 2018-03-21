@@ -34,19 +34,6 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-6 form-group{{ $errors->has('default_message') ? ' has-error' : '' }}">
-            <label for="default_message" class="col-md-3 control-label">Message <span class="required text-danger">*</span></label>
-
-            <div class="col-md-9">
-                <textarea id="default_message" class="form-control" name="default_message">{{ old('default_message') ? trim(old('default_message')) : trim($model->default_message) }}</textarea>
-
-                @if ($errors->has('default_message'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('default_message') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
     </div>
 
     <div class="panel-footer col-md-12">

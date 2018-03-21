@@ -26,4 +26,13 @@ class HomeController extends Controller {
         return view('home.index');
     }
 
+    /**
+     * SMS Marketing dashboard.
+     *
+     * @return Response
+     */
+    public function marketing() {
+        return view('home.marketing');
+    }
+
 }

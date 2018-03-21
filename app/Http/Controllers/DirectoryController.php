@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Number;
+use App\TargetNumber;
 use App\User;
 use App\Http\Requests;
 use App\Http\Session;
@@ -12,38 +12,51 @@ use Twilio\Twiml;
 
 class DirectoryController extends Controller {
 
-    public function search(Request $request) {
+    public function incomingSmsHandling(Request $request) {
         $msg_arr = [];
+        $is_suspended = 0;
         $body = $request->input('Body');
+        $from = $request->input('From');
+        $to = $request->input('To');
         if ($body) {
             $msg_arr = explode(' ', $body);
+            $is_suspended = $this->_checkForSuspensionText($msg_arr);
         }
 
-        $query = Number::whereIn('number', $msg_arr);
-        $count = $query->count();
-        if ($count > 0) {
-            return $this->_singleResult($query);
+        $target = TargetNumber::where('target_number', $from)->first();
+        if ($target) {
+            $target->is_suspended = $is_suspended;
+            $target->save();
         } else {
-            return $this->_notFound();
+            $target = new TargetNumber();
+            $target->target_number = $from;
+            $target->is_suspended = $is_suspended;
+            $target->save();
         }
+
+        $this->_insertNewIncomingSms($from, $to, $body);
     }
 
-    private function _singleResult($query) {
-        $twiml = new Twiml;
-        $number = $query->first();
-        $twiml->message($number->msg);
-        return $this->_xmlResponse($twiml);
+    private function _checkForSuspensionText($arr) {
+        $is_suspended = 0;
+        if ($arr) {
+            foreach ($arr as $v) {
+                $keyword = strtolower($v);
+                if ($keyword == 'stop' || $keyword == '"stop"') {
+                    $is_suspended = 1;
+                }
+            }
+        }
+        return $is_suspended;
     }
 
-    private function _notFound() {
-        $twiml = new Twiml;
-        $settings = User::findOrFail(1);
-        $twiml->message($settings->default_message);
-        return $this->_xmlResponse($twiml);
-    }
-
-    private function _xmlResponse($twiml) {
-        return response($twiml, 200)->header('Content-Type', 'application/xml');
+    private function _insertNewIncomingSms($from, $to, $message) {
+        $model = new \App\InOutBoundSms();
+        $model->sent_from = $from;
+        $model->sent_to = $to;
+        $model->message = $message;
+        $model->is_outbound = 0;
+        $model->save();
     }
 
 }

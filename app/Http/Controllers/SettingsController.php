@@ -9,16 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends Controller {
 
-   /**
-   * Create a new home controller instance.
-   *
-   * @return void
-   */
-    public function __construct()
-    {
+    /**
+     * Create a new home controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
         $this->middleware('auth');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -43,10 +41,8 @@ class SettingsController extends Controller {
         $model = User::findOrFail($id);
         $request->flash(); //save the input before redirect
         $rules = [
-          'name' => 'required',
-          'email' => 'required|email|unique:users,'.$id,
-          //'password' => 'required|min:6',
-          'default_message' => 'required|min:1'
+            'name' => 'required',
+            'email' => 'required|email|unique:users,' . $id
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -54,8 +50,6 @@ class SettingsController extends Controller {
         } else {
             $model->name = $request->input("name");
             $model->email = $request->input("email");
-            //$model->password = bcrypt($request->input("password"));
-            $model->default_message = $request->input("default_message");
 
             $model->save();
 

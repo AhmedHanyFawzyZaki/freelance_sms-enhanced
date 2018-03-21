@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">SMS - Marketing</div>
 
                 <div class="panel-body">
                     <div class="col-xs-6 col-md-4 text-center">
@@ -16,9 +16,9 @@
                             </a>
                         </h2>
                     </div>
-                    <div class="col-xs-6 col-md-4 col-md-offset-4 text-center">
+                    <div class="col-xs-6 col-md-4 text-center">
                         <h2>
-                            <a href="{{route('sms-marketing.index')}}" class="thumbnail">
+                            <a href="{{route('home.marketing')}}" class="thumbnail">
                                 <i class="fa fa-bar-chart"></i>
                                 <p>SMS - Marketing</p>
                             </a>

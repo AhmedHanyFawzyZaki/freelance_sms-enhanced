@@ -13,9 +13,9 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        {{-- <link href="{{ elixir('css/app.css') }}" rel="styl                   eshe                   et"> --}}
+                   {{-- <link href="{{ elixir('css/app.css') }}" rel="styl                   eshe                  et"> --}}
 
-                   <style>
+        <style>
                 body {
                     font-family: 'Lato';
                 }
@@ -32,6 +32,9 @@
                     display: block;
                     font-size: 14px;
                     font-weight: 500;
+                }
+                .clear{
+                    clear: both;
                 }
             </style>
         </head>
@@ -83,6 +86,11 @@
                 </div>
             </nav>
 
+            @if(Session::has('message'))
+            <div class="alert alert-info col-xs-6 col-xs-offset-3">
+                {{ Session::get('message') }}
+            </div>
+            @endif
             @yield('content')
 
             <!-- JavaScripts -->

@@ -26,6 +26,7 @@
                                 <th>SMS Message Received</th>
                                 <th class="">Twilio # Sent to</th>
                                 <th class="button-column">Twilio Message Reply Sent</th>
+                                <th class="">Creation Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,7 @@
                                 <td>{{$m->message}}</td>
                                 <td>{{$m->sent_to}}</td>
                                 <td>{{$m->reply}}</td>
+                                <td>{{$m->created_at}}</td>
                                 <!--<td class="button-column">
                                     <a class="btn btn-xs btn-primary" href="{{ route('sms-log.edit', $m->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                                     <form action="{{ route('sms-log.destroy', $m->id) }}" method="POST" style="display: inline;" onsubmit="if (confirm('Are you sure you want to delete this item?')) {
@@ -52,7 +54,7 @@
                             </tr>
                             @endforeach
                             @else
-                            <tr><td colspan="4"><span>Nothing Found</span></td></tr>
+                            <tr><td colspan="5"><span>Nothing Found</span></td></tr>
                             @endif
                         </tbody>
                     </table>

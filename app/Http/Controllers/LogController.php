@@ -148,6 +148,9 @@ class LogController extends Controller {
                     \DB::raw('sent_to as `Twilio # Sent To`'), \DB::raw('reply as `Twilio Message Reply Sent`')
                 ])
                 ->toArray();
+        if(!$seen){
+            SmsLog::query()->update(['seen' => 1]);
+        }
         return \Excel::create('SMS-Logs', function($excel) use ($logs) {
                     $excel->sheet('SMS-Logs', function($sheet) use ($logs) {
                         $sheet->fromArray($logs);
