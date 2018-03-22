@@ -51,15 +51,25 @@ class SmsController extends Controller {
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         } else {
+
+            $num = $request->input("sent_to");
+            $targetNumber = $this->_setTargetNumber($num);
+
+            //if target number is suspended don't send the message
+
             $model->is_outbound = 1;
             $model->sent_from = env('APP_NUMBER');
-            $model->sent_to = $request->input("sent_to");
+            $model->sent_to = $num;
             $model->message = $request->input("message");
-            $model->is_processed = 1; //individual outbound sms should be marked as processed
-            $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
-            $model->save();
-
-            return redirect()->route('sms-marketing.index')->with('message', 'New SMS has been sent successfully to the following number: ' . $model->sent_to);
+            $model->is_processed = 1;
+            if ($targetNumber && !$targetNumber->is_suspended) {
+                $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
+                $model->save();
+                return redirect()->route('sms-marketing.index')->with('message', 'New SMS has been sent successfully to the following number: ' . $model->sent_to);
+            } else {
+                //$model->error_msg = 'This Number is suspended, please remove suspension and try again later.';
+                return redirect()->route('sms-marketing.index')->with('message', 'This Number is suspended, please remove suspension and try again later.');
+            }
         }
     }
 
@@ -118,7 +128,9 @@ class SmsController extends Controller {
                     $num = $value->phone_to_send_sms_too;
                     $msg = $value->message_to_send;
 
-                    $this->_setTargetNumber($num);
+                    $targetNumber = $this->_setTargetNumber($num);
+
+                    //if target number is suspended don't send the message
 
                     $model = new InOutBoundSms();
                     $model->is_outbound = 1;
@@ -126,7 +138,11 @@ class SmsController extends Controller {
                     $model->sent_to = $num;
                     $model->message = $msg;
                     $model->is_processed = 1;
-                    $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
+                    if ($targetNumber && !$targetNumber->is_suspended) {
+                        $model->error_msg = $this->_sendSMS($model->sent_to, $model->message); //send the sms and receive the error if found
+                    } else {
+                        $model->error_msg = 'This Number is suspended, please remove suspension and try again later.';
+                    }
                     $model->save();
                 }
                 return redirect()->back()->with('message', 'The excel sheet has been imported successfully.');
@@ -153,6 +169,7 @@ class SmsController extends Controller {
             //$target->has_queue = 1;
         }
         $target->save();
+        return $target;
     }
 
 }

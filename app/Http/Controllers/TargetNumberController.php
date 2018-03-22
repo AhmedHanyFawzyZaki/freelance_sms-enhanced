@@ -54,6 +54,7 @@ class TargetNumberController extends Controller {
             return redirect()->back()->withErrors($validator);
         } else {
             $model->target_number = $request->input("target_number");
+            $model->is_suspended = $request->input("is_suspended") ? $request->input("is_suspended") : 0;
 
             $model->save();
 
@@ -105,6 +106,7 @@ class TargetNumberController extends Controller {
             return redirect()->back()->withErrors($validator);
         } else {
             $model->target_number = $request->input("target_number");
+            $model->is_suspended = $request->input("is_suspended") ? $request->input("is_suspended") : 0;
 
             $model->save();
 

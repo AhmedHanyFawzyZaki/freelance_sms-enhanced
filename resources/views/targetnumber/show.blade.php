@@ -63,6 +63,7 @@
                                         <th>To</th>
                                         <th>Message</th>
                                         <th>Date of creation</th>
+                                        <th>Errors</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,6 +74,7 @@
                                         <td>{{$ob->sent_to}}</td>
                                         <td>{{$ob->message}}</td>
                                         <td>{{$ob->created_at}}</td>
+                                        <td>{{substr($ob->error_msg, 0 ,143)}}</td>
                                     </tr>
                                     @endforeach
                                     @else

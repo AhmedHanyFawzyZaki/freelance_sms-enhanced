@@ -22,19 +22,19 @@
                 </div>
             </div>
 
-            <div class="col-md-6 form-group{{ $errors->has('has_queue') ? ' has-error' : '' }}">
-                <label for="has_queue" class="col-md-3 control-label"></label>
+            <div class="col-md-6 form-group{{ $errors->has('is_suspended') ? ' has-error' : '' }}">
+                <label for="is_suspended" class="col-md-3 control-label"></label>
 
                 <div class="col-md-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="has_queue" value="1"> Has Queue
+                            <input type="checkbox" name="is_suspended" value="1" {{ old('is_suspended') || $model->is_suspended ? 'checked': '' }} > Is Suspended?
                         </label>
                     </div>
 
-                    @if ($errors->has('has_queue'))
+                    @if ($errors->has('is_suspended'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('has_queue') }}</strong>
+                        <strong>{{ $errors->first('is_suspended') }}</strong>
                     </span>
                     @endif
                 </div>
