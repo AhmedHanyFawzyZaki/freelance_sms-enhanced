@@ -24,7 +24,15 @@ class TargetNumberController extends Controller {
      * @return Response
      */
     public function index() {
-        $model = TargetNumber::orderBy('id', 'desc')->paginate(10);
+        $model = TargetNumber::query();
+        if (isset($_GET['num']) && $_GET['num'] != '') {
+            $model = $model->where('target_number', 'like', '%' . $_GET['num'] . '%');
+        }
+        if (isset($_GET['type']) && $_GET['type'] != '') {
+            $model = $model->where('is_suspended', $_GET['type']);
+        }
+
+        $model = $model->orderBy('id', 'desc')->paginate(10);
 
         return view('targetnumber.index', compact('model'));
     }

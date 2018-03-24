@@ -10,9 +10,9 @@
                 <div class="panel-body">
                     <div class="pull-right">
                         @if($seen)
-                        <a href="{{route('sms-log.index')}}" class="btn btn-default">Show Unseen Logs</a>
+                        <a href="{{route('sms-log.index')}}" class="btn btn-default">Show Un-exported Logs</a>
                         @else
-                        <a href="{{route('sms-log.indexSeen')}}" class="btn btn-default">Show Seen Logs</a>
+                        <a href="{{route('sms-log.indexSeen')}}" class="btn btn-default">Show Exported Logs</a>
                         @endif
                         <a href="{{route('sms-log.export')}}?type={{$seen}}" class="btn btn-danger">Export CSV</a>
                     </div>
