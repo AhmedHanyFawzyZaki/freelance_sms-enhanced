@@ -11,6 +11,26 @@ use App\Http\Controllers\Controller;
 use Twilio\Twiml;
 
 class DirectoryController extends Controller {
+    
+    /**
+     * API Coming from another app
+     * @param Request $request
+     */
+
+    public function saveSmsLog(Request $request) {
+        $body = $request->input('Body');
+        $from = $request->input('From');
+        $to = $request->input('To');
+        $reply = $request->input('Reply');
+
+        $model = new \App\SmsLog();
+        $model->sent_from = $from;
+        $model->sent_to = $to;
+        $model->message = $body;
+        $model->reply = $reply;
+
+        $model->save();
+    }
 
     public function incomingSmsHandling(Request $request) {
         $msg_arr = [];
