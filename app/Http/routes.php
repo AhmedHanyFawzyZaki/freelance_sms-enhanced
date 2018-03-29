@@ -23,7 +23,7 @@ Route::group(
     Route::post('/upload-excel', ['uses' => 'SmsController@postUploadExcel', 'as' => 'upload-excel-post']);
 
     Route::post(
-            '/incomingSmsHandling', ['uses' => 'DirectoryController@incomingSmsHandling',
+            '/directory/incomingSmsHandling', ['uses' => 'DirectoryController@incomingSmsHandling',
         'as' => 'incomingSmsHandling']
     );
     Route::post(

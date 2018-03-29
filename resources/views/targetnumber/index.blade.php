@@ -25,6 +25,7 @@
                         <div class="col-md-7">
                             <a href="{{route('sms-marketing.create')}}" class="btn btn-default">Create Target Number</a>
                             <a href="{{route('upload-excel')}}" title="Upload csv to send mass sms" class="btn btn-success">Upload CSV</a>
+                            <!--<a href="{{url('/SAMPLE IMPORT.csv')}}" title="Download a sample from the csv to be imported" class="btn btn-info">Download Sample CSV</a>-->
                         </div>
                         <div class="col-md-5">
                             <form class="form-inline pull-right">
