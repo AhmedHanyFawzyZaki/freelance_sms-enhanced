@@ -22,7 +22,7 @@ I assume that this number will be marked as SPAM from time to time, so please ma
 
 2. Open the .env file and update all the fields whose prefix is "MAIL" with your smtp email information.
 
-3. Configure Twilio to call your webhooks.
+3. Configure Twilio to call your webhooks from the following url: https://www.twilio.com/console/phone-numbers/incoming
 
   You will also need to configure Twilio to call your application when calls are received
   on your _Twilio Number_. The **SMS & MMS Request URL** should look something like this:
