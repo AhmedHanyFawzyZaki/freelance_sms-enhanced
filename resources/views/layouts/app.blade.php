@@ -13,9 +13,9 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-                   {{-- <link href="{{ elixir('css/app.css') }}" rel="styl                   eshe                  et"> --}}
+        {{-- <link href="{{ elixir('css/app.css') }}" rel="styl                   eshe               et"> --}}
 
-        <style>
+                   <style>
                 body {
                     font-family: 'Lato';
                 }
@@ -37,22 +37,36 @@
                     clear: both;
                 }
             </style>
+
+            <!-- JavaScripts -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+            <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+            <script>
+$(function () {
+$("#send_start_date").datepicker();
+});
+        </script>
         </head>
-        <body id="app-layout">
-            <nav class="navbar navbar-default navbar-static-top">
-                <div class="container">
-                    <div class="navbar-header">
+        <body id="a        pp-layout">
+            <nav class="navbar navbar-default navbar-s            tatic-top">
+                <div class="                container">
+                    <div class="navba                    r-header">
 
-                        <!-- Collapsed Hamburger -->
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                            <span class="sr-only">Toggle Navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+                        <!-- Collapsed Ha                    mburger -->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar                        -collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-                        <!-- Branding Image -->
-                        <a class="navbar-brand" href="{{ url('/') }}">
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
                             {{env('APP_NAME')}}
                         </a>
                     </div>
@@ -74,28 +88,23 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                       </a>
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                </ul>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
+                       <ul class="dropdown-menu" role="menu">
+                           <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                       </ul>
+                       </li>
+                       @endif
+                       </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
 
-            @if(Session::has('message'))
-            <div class="alert alert-info col-xs-6 col-xs-offset-3">
-                {{ Session::get('message') }}
+        @if(Session::has('message'))
+        <div class="alert alert-info col-xs-6 col-xs-offset-3">
+            {{ Session::get('message') }}
             </div>
             @endif
             @yield('content')
-
-            <!-- JavaScripts -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-            {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-</body>
-</html>
+        </body>
+    </html>
