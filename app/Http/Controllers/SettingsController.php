@@ -50,6 +50,8 @@ class SettingsController extends Controller {
         } else {
             $model->name = $request->input("name");
             $model->email = $request->input("email");
+            $model->target_email = $request->input("target_email");
+            $model->target_phone = $request->input("target_phone");
 
             $model->save();
 

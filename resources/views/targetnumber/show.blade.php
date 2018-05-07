@@ -78,7 +78,7 @@
                                     </tr>
                                     @endforeach
                                     @else
-                                    <tr><td colspan="4"><span>No Outbound Messages Found</span></td></tr>
+                                    <tr><td colspan="5"><span>No Outbound Messages Found</span></td></tr>
                                     @endif
                                 </tbody>
                             </table>

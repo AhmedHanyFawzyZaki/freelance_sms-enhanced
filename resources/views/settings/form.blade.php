@@ -34,6 +34,33 @@
                 @endif
             </div>
         </div>
+        
+        <div class="col-md-6 form-group{{ $errors->has('target_email') ? ' has-error' : '' }}">
+            <label for="target_email" class="col-md-3 control-label">Target Email</label>
+
+            <div class="col-md-9">
+                <input id="target_email" type="target_email" class="form-control" name="target_email" value="{{ old('target_email') ? old('target_email') : $model->target_email }}">
+
+                @if ($errors->has('target_email'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('target_email') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-6 form-group{{ $errors->has('target_phone') ? ' has-error' : '' }}">
+            <label for="target_phone" class="col-md-3 control-label">Target Phone</label>
+
+            <div class="col-md-9">
+                <input id="target_phone" type="target_phone" class="form-control" name="target_phone" value="{{ old('target_phone') ? old('target_phone') : $model->target_phone }}">
+
+                @if ($errors->has('target_phone'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('target_phone') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
     </div>
 
     <div class="panel-footer col-md-12">

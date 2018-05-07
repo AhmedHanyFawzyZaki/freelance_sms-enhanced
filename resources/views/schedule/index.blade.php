@@ -54,7 +54,7 @@
                             <tr>
                                 <td>{{$m->target_number}}</td>
                                 <td>{{$m->message}}</td>
-                                <td>{{$m->scheduleRelation->title}}</td>
+                                <td>{{$m->schedule_id? $m->scheduleRelation->title:''}}</td>
                                 <td>{{$m->send_start_date}}</td>
                                 <td>{{$m->last_send_date}}</td>
                                 <td>{!!$m->is_suspended?'<i class="label label-danger">Yes</i>':'No'!!}</td>

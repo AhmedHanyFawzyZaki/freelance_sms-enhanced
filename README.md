@@ -16,6 +16,25 @@ The only thing you need to add to that project is the ability to download a CSV 
 I assume that this number will be marked as SPAM from time to time, so please make it so I can change the twilio number easily if I need too.  I don't know how you would design that, but if you can do it in a user-friendly way, I would appreciate it.  Use the same password recovery SMTP information that you did today for my other project... The twilio@nbob.org email address.
 
 
+
+CONCEPT #2 The Project needs to work as follows:
+ 
+I want to send the following message to 4122334433.  The message is “ please send me the contract”.  I want this message to get sent either every 24 hours, every 48 hours, every 72 hours or once a week.  I only want those 4 options
+ 
+I want you to add this to the mass sms control panel and also allow the “reply with STOP” feature to work too so they are unsubscribed.
+ 
+I also wanted to any replies people sent to that twilio number to be forwarded to me as either an SMS to 5614449669 or as an email to twilio@jamisonsystems.com.
+ 
+Right now, I can see replies to the mass sms inside the control panel but I wanted to get notifications as the messages come in via SMS.  If you forward me the replies via SMS, please make sure I have both the message and the sender’s phone number, so I can reply from my SMS account with google voice, which is 561-444-9669.  You would send all replies from people to 561-444-9669.  You will also need to look for STOP in the reply just like you currently do with the MASS SMS program and unsubscribe them from the list if they reply with STOP
+ 
+To be clear.... the same exact message would get sent to the number I designate until they either reply with STOP or until I delete them from the control panel.  I prefer you build this into the mass-sms project so I can log in to the same place.  I also want you to use the STOP feature on this new feature and forward any replies to me from either the mass-sms or this new feature as an sms to 561-444-9669. 
+ 
+I also want 2 additional options that allow me to send a single text on a specific date in the future AND the ability to send a recurring SMS message once per year on a specific date like a birthday…  The one-time in the future message is for appointment reminders.
+ 
+Please have these messages send out at 13hr on any given day.  I don’t want people to get these messages in the middle of the night when they are sleeping.  Send them at 13hr EST ( UTC -5:00 ).  Have the script run and send all of these messages at 13HR EST.  The Mass SMS feature will still run immediately once uploaded the CSV just like you designed it, but these new features should send only once per day at 13hr assuming there are messages to be sent that day.
+Hi Ahmed. Can you also add a 1 time per month option? I told you make 1 week the longest that repeats but want 1 month too as an option.
+
+
 ## Deployment
 
 1. First clone this repository to your own server and `cd` into it.

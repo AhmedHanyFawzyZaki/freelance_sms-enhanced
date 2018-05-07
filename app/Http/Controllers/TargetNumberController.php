@@ -24,7 +24,7 @@ class TargetNumberController extends Controller {
      * @return Response
      */
     public function index() {
-        $model = TargetNumber::query();
+        $model = TargetNumber::where('send_type', '0');
         if (isset($_GET['num']) && $_GET['num'] != '') {
             $model = $model->where('target_number', 'like', '%' . $_GET['num'] . '%');
         }
@@ -80,7 +80,6 @@ class TargetNumberController extends Controller {
         $model = TargetNumber::findOrFail($id);
         $inbounds = \App\InOutBoundSms::where('is_outbound', 0)->where('sent_from', $model->target_number)->orderBy('id', 'desc')->get();
         $outbounds = \App\InOutBoundSms::where('is_outbound', 1)->where('sent_to', $model->target_number)->orderBy('id', 'desc')->get();
-
         return view('targetnumber.show', array('model' => $model, 'inbounds' => $inbounds, 'outbounds' => $outbounds));
     }
 

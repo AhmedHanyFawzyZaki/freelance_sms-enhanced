@@ -59,11 +59,22 @@ class ScheduleController extends Controller {
         $model = new TargetNumber();
         $request->flash(); //save the input before redirect
 
-        $validator = Validator::make($request->all(), $model->rules);
+        $rules = [
+            'target_number' => 'required|unique:target_numbers',
+            'send_type' => 'required',
+            'send_start_date' => 'required',
+            'message' => 'required',
+            'schedule_id' => 'required_if:send_type,2'
+        ];
+        $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         } else {
             $model->target_number = $request->input("target_number");
+            $model->send_type = $request->input("send_type");
+            $model->send_start_date = $request->input("send_start_date");
+            $model->message = $request->input("message");
+            $model->schedule_id = $request->input("schedule_id");
             $model->is_suspended = $request->input("is_suspended") ? $request->input("is_suspended") : 0;
 
             $model->save();
@@ -110,13 +121,21 @@ class ScheduleController extends Controller {
         $model = TargetNumber::findOrFail($id);
         $request->flash(); //save the input before redirect
         $rules = [
-            'target_number' => 'required|unique:target_numbers,' . $id
+            'target_number' => 'required|unique:target_numbers,' . $id,
+            'send_type' => 'required',
+            'send_start_date' => 'required',
+            'message' => 'required',
+            'schedule_id' => 'required_if:send_type,2'
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         } else {
             $model->target_number = $request->input("target_number");
+            $model->send_type = $request->input("send_type");
+            $model->send_start_date = $request->input("send_start_date");
+            $model->message = $request->input("message");
+            $model->schedule_id = $request->input("schedule_id");
             $model->is_suspended = $request->input("is_suspended") ? $request->input("is_suspended") : 0;
 
             $model->save();
@@ -133,7 +152,9 @@ class ScheduleController extends Controller {
      */
     public function destroy($id) {
         $model = TargetNumber::findOrFail($id);
-        $model->delete();
+        $model->send_type = '0';
+        $model->save();
+        //$model->delete();
 
         return redirect()->route('sms-schedule.index')->with('message', 'Item deleted successfully.');
     }

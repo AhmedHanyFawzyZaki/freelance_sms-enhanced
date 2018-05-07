@@ -3,10 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Inspiring;
 
-class Inspire extends Command
-{
+class Inspire extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -19,15 +18,25 @@ class Inspire extends Command
      *
      * @var string
      */
-    protected $description = 'Display an inspiring quote';
+    protected $description = 'Send Scheduled SMS';
 
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $this->comment(PHP_EOL.Inspiring::quote().PHP_EOL);
+    public function handle() {
+        $numbers = \App\TargetNumber::where('send_type', '!=', '0')->get();
+        if ($numbers) {
+            $list = PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . 'New Task Has been started on ' . date('Y-m-d H:i:s') . PHP_EOL . PHP_EOL;
+            foreach ($numbers as $num) {
+                $sendFlag = $num->proccessSchedule();
+                $list .= $num->id . ' => ' . $sendFlag . PHP_EOL;
+            }
+            echo $list;
+        } else {
+            echo 'There is no scheduled SMS.';
+        }
     }
+
 }

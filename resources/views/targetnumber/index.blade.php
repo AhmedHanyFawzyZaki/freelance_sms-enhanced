@@ -67,11 +67,12 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                                     </form>
+                                    <a class="btn btn-xs btn-info" href="{{ route('sms-schedule.edit', $m->id) }}"><i class="glyphicon glyphicon-reply"></i> Add to schedule</a>
                                 </td>
                             </tr>
                             @endforeach
                             @else
-                            <tr><td colspan="3"><span>Nothing Found</span></td></tr>
+                            <tr><td colspan="4"><span>Nothing Found</span></td></tr>
                             @endif
                         </tbody>
                     </table>

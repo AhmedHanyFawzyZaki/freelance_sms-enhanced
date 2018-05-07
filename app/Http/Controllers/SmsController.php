@@ -95,7 +95,7 @@ class SmsController extends Controller {
                     //  'mediaUrl' => $imageUrl
                     ]
             );
-            Log::info('Message sent to ' . $twilioNumber);
+            Log::info('Message sent to ' . $to);
             return '';
         } catch (TwilioException $e) {
             return $e;

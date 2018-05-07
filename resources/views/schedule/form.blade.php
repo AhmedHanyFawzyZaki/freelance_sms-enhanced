@@ -1,4 +1,4 @@
-<form action="{{$model->exists ? route('sms-marketing.update', $model->id) : route('sms-marketing.store')}}" class="form-horizontal" method="post">
+<form action="{{$model->exists ? route('sms-schedule.update', $model->id) : route('sms-schedule.store')}}" class="form-horizontal" method="post">
     <div class="panel clear">
         <div class="panel-heading">
             <p class="help-block">Fields with <span class="required text-danger">*</span> are required.</p>
@@ -94,6 +94,7 @@
                 <div class="col-md-9">
 
                     <select name="schedule_id" class="form-control">
+                        <option value=""></option>
                         @foreach($sch_lkp as $sl)
                         <option value="{{$sl->id}}" {{ old('schedule_id') == $sl->id || $model->schedule_id == $sl->id ? 'selected': '' }} >{{ $sl->title }}</option>
                         @endforeach
