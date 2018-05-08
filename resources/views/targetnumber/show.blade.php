@@ -105,7 +105,7 @@
                                         <td>{{$ib->sent_from}}</td>
                                         <td>{{$ib->sent_to}}</td>
                                         <td>{{$ib->message}}</td>
-                                        <td>{{$ob->created_at}}</td>
+                                        <td>{{$ib->created_at}}</td>
                                     </tr>
                                     @endforeach
                                     @else

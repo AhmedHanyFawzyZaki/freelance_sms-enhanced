@@ -90,7 +90,8 @@ class DirectoryController extends Controller {
         /**
          * Email
          */
-        $targetEmail = Auth::user()->target_email ? Auth::user()->target_email : config('TARGET_EMAIL');
+		$admin = User::where('id', '1')->first();
+		$targetEmail = $admin->target_email ? $admin->target_email : config('TARGET_EMAIL');
         $targetSubject = 'New incoming sms has been received from (' . $from . ')';
         $targetMessage = 'From: ' . $from . ' <br />'
                 . 'To: ' . $to . ' <br />'
@@ -104,7 +105,7 @@ class DirectoryController extends Controller {
         /**
          * SMS
          */
-        $targetPhone = Auth::user()->target_phone ? Auth::user()->target_phone : config('TARGET_PHONE');
+        $targetPhone = $admin->target_phone ? $admin->target_phone : config('TARGET_PHONE');
         $this->_sendSMS($targetPhone, $targetMessage);
     }
 
@@ -138,5 +139,4 @@ class DirectoryController extends Controller {
               die; */
         }
     }
-
 }
